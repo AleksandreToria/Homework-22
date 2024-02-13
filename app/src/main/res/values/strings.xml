@@ -7,4 +7,7 @@
     <string name="comments">comments</string>
     <string name="likes">likes</string>
     <string name="share">share</string>
+    <string name="favourites">favourites</string>
+    <string name="home">home</string>
+    <string name="bell">bell</string>
 </resources>
