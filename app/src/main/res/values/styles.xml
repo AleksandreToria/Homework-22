@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Theme.App.Starting" parent="Theme.SplashScreen">
+        <item name="android:windowSplashScreenBackground">#FFFFFF</item>
+
+        <item name="android:windowSplashScreenAnimatedIcon">@drawable/baseline_accessibility_24
+        </item>
+        <item name="postSplashScreenTheme">@style/Theme.Homework22</item>
+    </style>
+
+    <style name="roundedImage">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">30dp</item>
+    </style>
+
+    <style name="roundedPostImage">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">20dp</item>
+    </style>
+</resources>

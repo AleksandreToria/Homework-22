@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="10dp"
+    android:layout_marginVertical="20dp"
+    app:cardBackgroundColor="@color/green"
+    app:cardCornerRadius="20dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/ivAvatar"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:src="@drawable/ic_launcher_background"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:fontFamily="@font/spf"
+            android:text="@string/sandro"
+            android:textColor="#FFFFFF"
+            app:layout_constraintStart_toEndOf="@+id/ivAvatar"
+            app:layout_constraintTop_toTopOf="@+id/ivAvatar" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvLastName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:fontFamily="@font/spf"
+            android:text="@string/sandro"
+            android:textColor="#FFFFFF"
+            app:layout_constraintStart_toEndOf="@+id/tvName"
+            app:layout_constraintTop_toTopOf="@+id/ivAvatar" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:fontFamily="@font/spf"
+            android:text="@string/sandro"
+            android:textColor="@color/grey"
+            app:layout_constraintStart_toStartOf="@+id/tvName"
+            app:layout_constraintTop_toBottomOf="@+id/tvName" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvDescription"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/spf"
+            android:maxLines="5"
+            android:text="@string/sandro"
+            android:textColor="@color/white"
+            app:layout_constraintStart_toStartOf="@+id/ivAvatar"
+            app:layout_constraintTop_toBottomOf="@+id/ivAvatar" />
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/ivImagePrimary"
+            android:layout_width="133dp"
+            android:layout_height="187dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:scaleType="centerCrop"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvDescription"
+            app:shapeAppearanceOverlay="@style/roundedPostImage" />
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/ivImageSecond"
+            android:layout_width="133dp"
+            android:layout_height="83dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="20dp"
+            android:scaleType="centerCrop"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvDescription"
+            app:shapeAppearanceOverlay="@style/roundedPostImage" />
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/ivImageThird"
+            android:layout_width="133dp"
+            android:layout_height="83dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="20dp"
+            android:scaleType="centerCrop"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/ivImageSecond"
+            app:shapeAppearanceOverlay="@style/roundedPostImage" />
+
+        <View
+            android:id="@+id/viewLine"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="20dp"
+            android:background="@color/grey"
+            app:layout_constraintTop_toBottomOf="@+id/ivImagePrimary" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivComment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:src="@drawable/ic_comment"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/viewLine" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvComments"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:fontFamily="@font/spf"
+            android:text="@string/comments"
+            android:textColor="@color/grey"
+            app:layout_constraintBottom_toBottomOf="@+id/ivComment"
+            app:layout_constraintStart_toEndOf="@id/ivComment"
+            app:layout_constraintTop_toTopOf="@+id/ivComment"
+            tools:layout_editor_absoluteX="83dp" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivLikes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="5dp"
+            android:src="@drawable/ic_heart"
+            app:layout_constraintBottom_toBottomOf="@+id/tvComments"
+            app:layout_constraintEnd_toStartOf="@id/tvLikes"
+            app:layout_constraintTop_toTopOf="@+id/tvComments" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvLikes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="10dp"
+            android:fontFamily="@font/spf"
+            android:text="@string/likes"
+            android:textColor="@color/grey"
+            app:layout_constraintBottom_toBottomOf="@+id/ivLikes"
+            app:layout_constraintEnd_toStartOf="@id/ivShare"
+            app:layout_constraintHorizontal_bias="0.433"
+            app:layout_constraintTop_toTopOf="@+id/ivLikes" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivShare"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="5dp"
+            android:src="@drawable/ic_share"
+            app:layout_constraintBottom_toBottomOf="@+id/tvLikes"
+            app:layout_constraintEnd_toStartOf="@id/tvShare"
+            app:layout_constraintTop_toTopOf="@+id/tvLikes"
+            tools:layout_editor_absoluteX="302dp" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvShare"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="20dp"
+            android:fontFamily="@font/spf"
+            android:text="@string/share"
+            android:textColor="@color/grey"
+            app:layout_constraintBottom_toBottomOf="@+id/ivShare"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/ivShare"
+            tools:layout_editor_absoluteX="303dp" />
+
+        <View
+            android:id="@+id/line"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="30dp"
+            android:background="@color/light_grey"
+            app:layout_constraintTop_toBottomOf="@+id/tvLikes" />
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/ivUserAvatar"
+            android:layout_width="42dp"
+            android:layout_height="42dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="20dp"
+            android:src="@drawable/ic_launcher_background"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/line" />
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:layout_width="0dp"
+            android:layout_height="42dp"
+            android:layout_marginHorizontal="20dp"
+            android:background="@drawable/rounded_comment"
+            android:drawableEnd="@drawable/ic_scrapper"
+            android:fontFamily="@font/spf"
+            android:hint="@string/write_comment"
+            android:paddingStart="15dp"
+            android:paddingEnd="15dp"
+            android:textColorHint="@color/light_grey"
+            app:layout_constraintBottom_toBottomOf="@+id/ivUserAvatar"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/ivUserAvatar"
+            app:layout_constraintTop_toTopOf="@+id/ivUserAvatar" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</com.google.android.material.card.MaterialCardView>
