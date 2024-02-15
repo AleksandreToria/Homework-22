@@ -1,16 +1,16 @@
-package com.example.homework22.presentation.screen
+package com.example.homework22.presentation.screen.home_fragment
 
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.navigation.fragment.findNavController
 import com.example.homework22.databinding.FragmentHomeBinding
 import com.example.homework22.presentation.base.BaseFragment
-import com.example.homework22.presentation.event.HomeEvent
+import com.example.homework22.presentation.event.home.HomeEvent
 import com.example.homework22.presentation.extension.showSnackBar
-import com.example.homework22.presentation.state.HomeState
+import com.example.homework22.presentation.state.home.HomeState
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -35,6 +35,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
     }
 
     override fun bindViewActionListeners() {
+        postAdapter.setOnItemClickListener {
+            viewModel.onEvent(HomeEvent.ItemClick(it.id))
+        }
     }
 
     override fun bindObserves() {
@@ -42,6 +45,14 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.homeState.collect {
                     handleHomeState(it)
+                }
+            }
+        }
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.uiEvent.collect {
+                    handleNavigationEvents(event = it)
                 }
             }
         }
@@ -62,6 +73,18 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         state.errorMessage?.let {
             binding.root.showSnackBar(message = it)
             viewModel.onEvent(HomeEvent.ResetErrorMessage)
+        }
+    }
+
+    private fun handleNavigationEvents(event: HomeFragmentViewModel.HomeFragmentUiEvent) {
+        when(event) {
+            is HomeFragmentViewModel.HomeFragmentUiEvent.NavigateToPostDetail -> {
+                findNavController().navigate(
+                    HomeFragmentDirections.actionHomeFragmentToPostDetailFragment(
+                        id = event.id
+                    )
+                )
+            }
         }
     }
 }

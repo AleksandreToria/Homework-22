@@ -8,6 +8,7 @@ import com.example.homework22.data.service.post.PostService
 import com.example.homework22.domain.model.post.GetPosts
 import com.example.homework22.domain.repository.post.PostRepository
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class PostRepositoryImpl @Inject constructor(
@@ -22,5 +23,13 @@ class PostRepositoryImpl @Inject constructor(
                  postDto.toDomain()
              }
          }
+    }
+
+    override suspend fun getPostDetail(id: Int): Flow<Resource<GetPosts>> {
+        return handleResponse.apiCall {
+            postService.getPostDetail(id)
+        }.asResource {
+            it.toDomain()
+        }
     }
 }

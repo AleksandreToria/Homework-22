@@ -1,4 +1,4 @@
-package com.example.homework22.presentation.screen
+package com.example.homework22.presentation.screen.home_fragment
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

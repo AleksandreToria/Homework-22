@@ -10,4 +10,8 @@
     <string name="favourites">favourites</string>
     <string name="home">home</string>
     <string name="bell">bell</string>
+    <string name="channel_id">channel</string>
+    <string name="channel_description">Cool channel</string>
+    <string name="blabla">blabla</string>
+    <string name="kaxetshi_vart_zgvaze">kaxetshi vart zgvaze</string>
 </resources>

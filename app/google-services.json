@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "10558097316",
+    "project_id": "hw23-remotenotifications",
+    "storage_bucket": "hw23-remotenotifications.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:10558097316:android:0df0291a4918d319396331",
+        "android_client_info": {
+          "package_name": "com.example.homework22"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDqtPsogS-UQNTjryLEP1gzVRMTsFV6PD0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

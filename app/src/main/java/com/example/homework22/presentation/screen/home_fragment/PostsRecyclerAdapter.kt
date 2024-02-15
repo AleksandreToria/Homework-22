@@ -1,4 +1,4 @@
-package com.example.homework22.presentation.screen
+package com.example.homework22.presentation.screen.home_fragment
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
@@ -14,6 +14,12 @@ import com.example.homework22.presentation.model.post.Posts
 class PostsRecyclerAdapter :
     ListAdapter<Posts, PostsRecyclerAdapter.PostsViewHolder>(PostsDiffUtil()) {
 
+    private var onItemClick: ((Posts) -> Unit)? = null
+
+    fun setOnItemClickListener(listener: (Posts) -> Unit) {
+        this.onItemClick = listener
+    }
+
     inner class PostsViewHolder(private val binding: PostsLayoutBinding) :
         RecyclerView.ViewHolder(binding.root) {
         private lateinit var model: Posts
@@ -24,24 +30,28 @@ class PostsRecyclerAdapter :
 
             binding.apply {
                 ivAvatar.loadImage(model.owner.profile)
-                tvName.text = model.owner.firstName
+                firstName.text = model.owner.firstName
                 tvLastName.text = model.owner.lastName
-                tvDate.convertEpochDateToRegularDate(model.owner.postDate.toLong())
-                tvDescription.text = model.title
-                tvLikes.text = model.likes.toString()
-                tvShare.text = model.shareContent
-                tvComments.text = "${model.comments} comments"
+                date.convertEpochDateToRegularDate(model.owner.postDate.toLong())
+                description.text = model.title
+                likeCount.text = model.likes.toString()
+                shareText.text = model.shareContent
+                commentCount.text = "${model.comments} comments"
 
                 model.images.let { images ->
                     if (images.isNotEmpty()) {
-                        ivImagePrimary.loadImage(images[0])
+                        firstImage.loadImage(images[0])
                     }
                     if (images.size > 1) {
-                        ivImageSecond.loadImage(images[1])
+                        secondImage.loadImage(images[1])
                     }
                     if (images.size > 2) {
-                        ivImageThird.loadImage(images[2])
+                        thirdImage.loadImage(images[2])
                     }
+                }
+
+                root.setOnClickListener {
+                    onItemClick?.invoke(model)
                 }
             }
         }
