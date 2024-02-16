@@ -6,6 +6,9 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView.HORIZONTAL
+import androidx.recyclerview.widget.RecyclerView.LayoutManager
 import com.example.homework22.databinding.FragmentHomeBinding
 import com.example.homework22.presentation.base.BaseFragment
 import com.example.homework22.presentation.event.home.HomeEvent
@@ -18,16 +21,14 @@ import kotlinx.coroutines.launch
 class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::inflate) {
 
     private val viewModel: HomeFragmentViewModel by viewModels()
-    private lateinit var storyAdapter: StoriesRecyclerAdapter
-    private lateinit var postAdapter: PostsRecyclerAdapter
+    private lateinit var homeAdapter: HomeAdapter
 
     override fun bind() {
-        storyAdapter = StoriesRecyclerAdapter()
-        postAdapter = PostsRecyclerAdapter()
+        homeAdapter = HomeAdapter(emptyList(), emptyList())
 
         binding.apply {
-            storiesRecyclerView.adapter = storyAdapter
-            postRecyclerView.adapter = postAdapter
+            hostRecyclerView.adapter = homeAdapter
+            hostRecyclerView.layoutManager = LinearLayoutManager(context)
         }
 
         viewModel.onEvent(HomeEvent.FetchStories)
@@ -35,9 +36,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
     }
 
     override fun bindViewActionListeners() {
-        postAdapter.setOnItemClickListener {
-            viewModel.onEvent(HomeEvent.ItemClick(it.id))
-        }
+//        postAdapter.setOnItemClickListener {
+//            viewModel.onEvent(HomeEvent.ItemClick(it.id))
+//        }
     }
 
     override fun bindObserves() {
@@ -59,16 +60,11 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
     }
 
     private fun handleHomeState(state: HomeState) {
+
         binding.progress.visibility =
             if (state.isLoading) View.VISIBLE else View.GONE
 
-        state.stories?.let {
-            storyAdapter.submitList(it)
-        }
-
-        state.posts?.let {
-            postAdapter.submitList(it)
-        }
+        homeAdapter.updateData(state.stories ?: emptyList(), state.posts ?: emptyList())
 
         state.errorMessage?.let {
             binding.root.showSnackBar(message = it)

@@ -17,4 +17,5 @@
     <string name="favourites_fragment">Favourites Fragment</string>
     <string name="messages_fragment">Messages Fragment</string>
     <string name="notifications_fragment">Notifications Fragment</string>
+    <string name="when_you_wake_up">When you wake up</string>
 </resources>
