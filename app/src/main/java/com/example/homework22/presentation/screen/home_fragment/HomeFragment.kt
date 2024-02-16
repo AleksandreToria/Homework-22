@@ -77,7 +77,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
     }
 
     private fun handleNavigationEvents(event: HomeFragmentViewModel.HomeFragmentUiEvent) {
-        when(event) {
+        when (event) {
             is HomeFragmentViewModel.HomeFragmentUiEvent.NavigateToPostDetail -> {
                 findNavController().navigate(
                     HomeFragmentDirections.actionHomeFragmentToPostDetailFragment(

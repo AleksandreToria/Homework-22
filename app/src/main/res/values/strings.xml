@@ -14,4 +14,7 @@
     <string name="channel_description">Cool channel</string>
     <string name="blabla">blabla</string>
     <string name="kaxetshi_vart_zgvaze">kaxetshi vart zgvaze</string>
+    <string name="favourites_fragment">Favourites Fragment</string>
+    <string name="messages_fragment">Messages Fragment</string>
+    <string name="notifications_fragment">Notifications Fragment</string>
 </resources>

@@ -6,7 +6,6 @@ import com.example.homework22.data.common.Resource
 import com.example.homework22.domain.usecase.post.PostUseCase
 import com.example.homework22.presentation.event.post_event.PostDetailEvent
 import com.example.homework22.presentation.mapper.post.toPresenter
-import com.example.homework22.presentation.screen.home_fragment.HomeFragmentViewModel
 import com.example.homework22.presentation.state.post_detail.PostDetailState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
