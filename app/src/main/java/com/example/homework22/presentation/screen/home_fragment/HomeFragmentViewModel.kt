@@ -3,6 +3,7 @@ package com.example.homework22.presentation.screen.home_fragment
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.homework22.data.common.Resource
+import com.example.homework22.domain.usecase.post.GetPostsUseCase
 import com.example.homework22.domain.usecase.post.PostUseCase
 import com.example.homework22.domain.usecase.story.GetStoriesUseCase
 import com.example.homework22.presentation.event.home.HomeEvent
@@ -21,7 +22,7 @@ import javax.inject.Inject
 @HiltViewModel
 class HomeFragmentViewModel @Inject constructor(
     private val getStoriesUseCase: GetStoriesUseCase,
-    private val postUseCase: PostUseCase
+    private val getPostsUseCase: GetPostsUseCase
 ) : ViewModel() {
     private val _homeState = MutableStateFlow(HomeState())
     val homeState: SharedFlow<HomeState> = _homeState.asStateFlow()
@@ -68,7 +69,7 @@ class HomeFragmentViewModel @Inject constructor(
 
     private fun fetchPosts() {
         viewModelScope.launch {
-            postUseCase.getPostsUseCase().collect() { it ->
+            getPostsUseCase().collect() { it ->
                 when (it) {
                     is Resource.Error -> updateErrorMessage(message = it.errorMessage)
 

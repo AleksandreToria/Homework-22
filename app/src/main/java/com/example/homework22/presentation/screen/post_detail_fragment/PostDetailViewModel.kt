@@ -3,6 +3,7 @@ package com.example.homework22.presentation.screen.post_detail_fragment
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.homework22.data.common.Resource
+import com.example.homework22.domain.usecase.post.GetPostDetailUseCase
 import com.example.homework22.domain.usecase.post.PostUseCase
 import com.example.homework22.presentation.event.post_event.PostDetailEvent
 import com.example.homework22.presentation.mapper.post.toPresenter
@@ -18,7 +19,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class PostDetailViewModel @Inject constructor(
-    private val postUseCase: PostUseCase
+    private val getPostDetailUseCase: GetPostDetailUseCase
 ) : ViewModel() {
     private val _postDetailState = MutableStateFlow(PostDetailState())
     val postDetailState: SharedFlow<PostDetailState> = _postDetailState.asStateFlow()
@@ -36,7 +37,7 @@ class PostDetailViewModel @Inject constructor(
 
     private fun fetchPostDetail(id: Int) {
         viewModelScope.launch {
-            postUseCase.getPostDetailUseCase(id).collect {
+            getPostDetailUseCase(id).collect {
                 when (it) {
                     is Resource.Error -> updateErrorMessage(message = it.errorMessage)
 
