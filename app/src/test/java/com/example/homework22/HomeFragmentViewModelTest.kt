@@ -10,17 +10,15 @@ import com.example.homework22.presentation.event.home.HomeEvent
 import com.example.homework22.presentation.mapper.post.toPresenter
 import com.example.homework22.presentation.mapper.story.toPresenter
 import com.example.homework22.presentation.screen.home_fragment.HomeFragmentViewModel
-import com.example.homework22.presentation.state.home.HomeState
 import com.nhaarman.mockitokotlin2.whenever
 import junit.framework.TestCase.assertFalse
 import junit.framework.TestCase.assertTrue
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.take
 import kotlinx.coroutines.flow.toList
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runTest
@@ -50,6 +48,7 @@ class HomeFragmentViewModelTest {
 
     @Test
     fun `fetchStories emits correct states`() = runTest {
+        // Arrange
         val stories = listOf(
             GetStories(id = 1, cover = "Aleksandre", title = "Longinoza"),
             GetStories(id = 2, cover = "Longinoza", title = "Longinoza"),
@@ -57,20 +56,22 @@ class HomeFragmentViewModelTest {
         )
         whenever(getStoriesUseCase()).thenReturn(flowOf(Resource.Success(stories)))
 
-        val collectedStates = mutableListOf<HomeState>()
-        val collectJob = launch {
-            viewModel.homeState.toList(collectedStates)
-        }
-
+        // Act
         viewModel.onEvent(HomeEvent.FetchStories)
-        delay(500)
-        collectJob.cancel()
+
+        // Assert
+        val collectedStates = viewModel.homeState.take(2).toList()
 
         assertTrue(
             "Expected at least one state with stories",
-            collectedStates.any { it -> it.stories == stories.map { it.toPresenter() } && it.errorMessage == null })
-        assertFalse("Expected isLoading to be false", collectedStates.last().isLoading)
+            collectedStates.any { it -> it.stories == stories.map { it.toPresenter() } && it.errorMessage == null }
+        )
+        assertFalse(
+            "Expected isLoading to be false in last state",
+            collectedStates.last().isLoading
+        )
     }
+
 
     @Test
     fun `fetchPosts emits correct states`() = runTest {
@@ -96,37 +97,29 @@ class HomeFragmentViewModelTest {
         )
         whenever(getPostsUseCase()).thenReturn(flowOf(Resource.Success(posts)))
 
-        val collectedStates = mutableListOf<HomeState>()
-        val collectJob = launch {
-            viewModel.homeState.toList(collectedStates)
-        }
-
         viewModel.onEvent(HomeEvent.FetchPosts)
-        delay(500)
-        collectJob.cancel()
+
+        val collectedStates = viewModel.homeState.take(2).toList()
 
         assertTrue(
             "Expected at least one state with posts",
-            collectedStates.any { it -> it.posts == posts.map { it.toPresenter() } && it.errorMessage == null })
-        assertFalse("Expected isLoading to be false", collectedStates.last().isLoading)
+            collectedStates.any { it -> it.posts == posts.map { it.toPresenter() } && it.errorMessage == null }
+        )
+        assertFalse(
+            "Expected isLoading to be false in last state",
+            collectedStates.last().isLoading
+        )
     }
+
 
     @Test
     fun `fetchStories emits Error state`() = runTest {
         val errorMessage = "An error occurred"
         whenever(getStoriesUseCase()).thenReturn(flowOf(Resource.Error(errorMessage)))
 
-        val collectedStates = mutableListOf<HomeState>()
-
-        val collectJob = launch {
-            viewModel.homeState.toList(collectedStates)
-        }
-
         viewModel.onEvent(HomeEvent.FetchStories)
 
-        delay(500)
-
-        collectJob.cancel()
+        val collectedStates = viewModel.homeState.take(2).toList()
 
         assertTrue(
             "Expected at least one state with error message",
@@ -134,21 +127,15 @@ class HomeFragmentViewModelTest {
         )
     }
 
+
     @Test
     fun `fetchPosts emits Error state`() = runTest {
         val errorMessage = "racxa erori"
         whenever(getPostsUseCase()).thenReturn(flowOf(Resource.Error(errorMessage)))
-        val collectedStates = mutableListOf<HomeState>()
-
-        val collectJob = launch {
-            viewModel.homeState.toList(collectedStates)
-        }
 
         viewModel.onEvent(HomeEvent.FetchPosts)
 
-        delay(500)
-
-        collectJob.cancel()
+        val collectedStates = viewModel.homeState.take(2).toList()
 
         assertTrue(
             "Expected at least one state with error message",
@@ -160,52 +147,35 @@ class HomeFragmentViewModelTest {
     fun `fetchStories emits Loading state`() = runTest {
         whenever(getStoriesUseCase()).thenReturn(flow {
             emit(Resource.Loading(true))
-
-            delay(100)
-
-            emit(Resource.Success(listOf<GetStories>()))
+            emit(Resource.Success(emptyList()))
         })
-
-        val collectedStates = mutableListOf<HomeState>()
-
-        val collectJob = launch {
-            viewModel.homeState.toList(collectedStates)
-        }
 
         viewModel.onEvent(HomeEvent.FetchStories)
 
-        delay(500)
-
-        collectJob.cancel()
+        val collectedStates = viewModel.homeState.take(2).toList()
 
         assertTrue(
             "Expected at least one state where isLoading is true",
-            collectedStates.any { it.isLoading })
+            collectedStates.any { it.isLoading }
+        )
     }
+
 
     @Test
     fun `fetchPosts emits Loading state`() = runTest {
         whenever(getPostsUseCase()).thenReturn(flow {
             emit(Resource.Loading(true))
-            delay(100)
-            emit(Resource.Success(listOf<GetPosts>()))
+            emit(Resource.Success(emptyList()))
         })
-
-        val collectedStates = mutableListOf<HomeState>()
-
-        val collectJob = launch {
-            viewModel.homeState.toList(collectedStates)
-        }
 
         viewModel.onEvent(HomeEvent.FetchPosts)
 
-        delay(500)
-
-        collectJob.cancel()
+        val collectedStates = viewModel.homeState.take(2).toList()
 
         assertTrue(
             "Expected at least one state where isLoading is true",
-            collectedStates.any { it.isLoading })
+            collectedStates.any { it.isLoading }
+        )
     }
 
     @After

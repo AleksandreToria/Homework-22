@@ -13,8 +13,8 @@ import junit.framework.TestCase.assertFalse
 import junit.framework.TestCase.assertTrue
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.take
 import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.StandardTestDispatcher
@@ -57,12 +57,11 @@ class PostDetailFragmentViewModelTest {
 
         val collectedStates = mutableListOf<PostDetailState>()
         val collectJob = launch {
-            viewModel.postDetailState.toList(collectedStates)
+            viewModel.postDetailState.take(2).toList(collectedStates)
         }
 
         viewModel.onEvent(PostDetailEvent.FetchPostDetail(postId))
-        delay(500)
-        collectJob.cancel()
+        collectJob.join()
 
         assertTrue(
             "Expected at least one state with postDetail",
@@ -82,12 +81,11 @@ class PostDetailFragmentViewModelTest {
 
         val collectedStates = mutableListOf<PostDetailState>()
         val collectJob = launch {
-            viewModel.postDetailState.toList(collectedStates)
+            viewModel.postDetailState.take(2).toList(collectedStates)
         }
 
         viewModel.onEvent(PostDetailEvent.FetchPostDetail(postId))
-        delay(500)
-        collectJob.cancel()
+        collectJob.join()
 
         assertTrue(
             "Expected at least one state with error message",
@@ -100,7 +98,8 @@ class PostDetailFragmentViewModelTest {
         val postId = 1
         whenever(getPostDetailUseCase(postId)).thenReturn(
             flowOf(
-                Resource.Loading(true), Resource.Success(
+                Resource.Loading(true),
+                Resource.Success(
                     GetPosts(
                         id = postId,
                         comments = 100,
@@ -116,12 +115,11 @@ class PostDetailFragmentViewModelTest {
 
         val collectedStates = mutableListOf<PostDetailState>()
         val collectJob = launch {
-            viewModel.postDetailState.toList(collectedStates)
+            viewModel.postDetailState.take(2).toList(collectedStates)
         }
 
         viewModel.onEvent(PostDetailEvent.FetchPostDetail(postId))
-        delay(500)
-        collectJob.cancel()
+        collectJob.join()
 
         assertTrue(
             "Expected at least one state where isLoading is true",

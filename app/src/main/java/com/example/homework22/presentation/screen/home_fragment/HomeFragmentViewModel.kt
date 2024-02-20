@@ -4,7 +4,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.homework22.data.common.Resource
 import com.example.homework22.domain.usecase.post.GetPostsUseCase
-import com.example.homework22.domain.usecase.post.PostUseCase
 import com.example.homework22.domain.usecase.story.GetStoriesUseCase
 import com.example.homework22.presentation.event.home.HomeEvent
 import com.example.homework22.presentation.mapper.post.toPresenter
